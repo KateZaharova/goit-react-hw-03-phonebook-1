@@ -1,6 +1,6 @@
-import { Wrapper, TextInput } from "./Filter.styled";
+import { Wrapper, TextInput, ResetBtn } from "./Filter.styled";
 
-export const Filter = ({onChangeFilter}) => {
+export const Filter = ({onChangeFilter, onReset}) => {
     return (
         <Wrapper>
              <label>Find contacts by name</label>
@@ -9,6 +9,7 @@ export const Filter = ({onChangeFilter}) => {
                 name="Findname"
                 onChange={evt=>onChangeFilter(evt.target.value)}
             />
+             <ResetBtn onClick={onReset}>Reset</ResetBtn>
         </Wrapper>
     )
 }

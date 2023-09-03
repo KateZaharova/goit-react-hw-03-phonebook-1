@@ -19,6 +19,22 @@ export class App extends Component {
   };
 
 
+componentDidMount() {
+    const savedFilter = localStorage.getItem("contact-filter");
+      if (savedFilter !== null) {
+      this.setState({
+        filter: JSON.parse(savedFilter)
+      });
+    }
+}
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.filter !== this.state.filter) {
+      localStorage.setItem("contact-filter", JSON.stringify(this.state.filter))
+}    
+}
+
+
   addContact = contact => {
     console.log(contact)
     if (-1 !== this.state.contacts.findIndex(option => option.contact.name === contact.name)) {
@@ -56,6 +72,12 @@ export class App extends Component {
     });
   };
 
+ resetFilter = () => {
+    this.setState({
+      filter: '',
+    })
+  }
+
 
   render() {
     const filteredContacts = this.getFilteredContacts();
@@ -73,7 +95,7 @@ return (
     <h1>Phonebook</h1>
     <ContactForm onAddContact={this.addContact} />
     <h2>Contacts</h2>
-    <Filter onChangeFilter={this.findName}/>
+    <Filter onChangeFilter={this.findName} onReset={this.resetFilter}/>
     <ContactList contacts={filteredContacts} onDelete={this.deleteContact} contactData={this.contacts} />
     <GlobalStyle/>
     </Layout>
